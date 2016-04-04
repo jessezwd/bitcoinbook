@@ -23,7 +23,7 @@ Once recorded on the blockchain and confirmed by sufficient subsequent blocks (c
 
 Transactions can be created online or offline by anyone, even if the person creating the transaction is not an authorized signer on the account. For example, an accounts payable clerk might process payable checks for signature by the CEO. Similarly, an accounts payable clerk can create bitcoin transactions and then have the CEO apply digital signatures to make them valid. Whereas a check references a specific account as the source of the funds, a bitcoin transaction references a specific previous transaction as its source, rather than an account. 
 
-Once a transaction has been created, it is signed by the owner (or owners) of the source funds. If it is properly formed and signed, the signed transaction is now valid and contains all the information needed to execute the transfer of funds. Finally, the valid transaction has to reach the bitcoin network so that it can be propagated until it reaches a miner for inclusion in the pubic ledger (the blockchain).
+Once a transaction has been created, it is signed by the owner (or owners) of the source funds. If it is properly formed and signed, the signed transaction is now valid and contains all the information needed to execute the transfer of funds. Finally, the valid transaction has to reach the bitcoin network so that it can be propagated until it reaches a miner for inclusion in the public ledger (the blockchain).
 
 [[tx_bcast]]
 ==== Broadcasting Transactions to the Bitcoin Network
@@ -377,12 +377,15 @@ The two scripts together would form the following combined validation script:
 
 When executed, this combined script will evaluate to TRUE if, and only if, the unlocking script matches the conditions set by the locking script. In other words, the result will be TRUE if the unlocking script has a valid signature from the cafe's private key that corresponds to the public key hash set as an encumbrance. 
 
-Figures pass:[<xref linkend="P2PubKHash1" xrefstyle="select: labelnumber"/>] and pass:[<xref linkend="P2PubKHash2" xrefstyle="select: labelnumber"/>] show (in two parts) a step-by-step execution of the combined script, which will prove this is a valid transaction.(((range="endofrange", startref="ix_ch05-asciidoc16")))(((range="endofrange", startref="ix_ch05-asciidoc15")))
+Figures pass:[<a data-type="xref" href="#P2PubKHash1" data-xrefstyle="select: labelnumber">#P2PubKHash1</a>] and pass:[<a data-type="xref" href="#P2PubKHash2" data-xrefstyle="select: labelnumber">#P2PubKHash2</a>] show (in two parts) a step-by-step execution of the combined script, which will prove this is a valid transaction.(((range="endofrange", startref="ix_ch05-asciidoc16")))(((range="endofrange", startref="ix_ch05-asciidoc15")))
 
 [[P2PubKHash1]]
 .Evaluating a script for a P2PKH transaction (Part 1 of 2)
 image::images/msbt_0503.png["Tx_Script_P2PubKeyHash_1"]
 
+[[P2PubKHash2]]
+.Evaluating a script for a P2PKH transaction (Part 2 of 2)
+image::images/msbt_0504.png["Tx_Script_P2PubKeyHash_2"]
 
 [[p2pk]]    
 ==== Pay-to-Public-Key
@@ -408,10 +411,6 @@ The combined script, which is validated by the transaction validation software, 
 ----
 
 This script is a simple invocation of the +CHECKSIG+ operator, which validates the signature as belonging to the correct key and returns TRUE on the stack.
-
-[[P2PubKHash2]]
-.Evaluating a script for a P2PKH transaction (Part 2 of 2)
-image::images/msbt_0504.png["Tx_Script_P2PubKeyHash_2"]
 
 [[multisig]]
 ==== Multi-Signature
@@ -467,7 +466,7 @@ In version 0.9 of the Bitcoin Core client, a compromise was reached with the int
 OP_RETURN <data>
 ----
 
-The data portion is limited to 80 bytes and most often represents a hash, such as the output from the SHA256 algorithm (32 bytes). Many applications put a prefix in front of the data to help identify the application. For example, the http://proofofexistence.com[Proof of Existence] digital notarization service uses the 8-byte prefix "DOCPROOF," which is ASCII encoded as +44f4350524f4f46+ in hexadecimal.
+The data portion is limited to 80 bytes and most often represents a hash, such as the output from the SHA256 algorithm (32 bytes). Many applications put a prefix in front of the data to help identify the application. For example, the http://proofofexistence.com[Proof of Existence] digital notarization service uses the 8-byte prefix +DOCPROOF+, which is ASCII encoded as +44 4f 43 50 52 4f 4f 46+ in hexadecimal.
 
 Keep in mind that there is no "unlocking script" that corresponds to +OP_RETURN+ that could possibly be used to "spend" an +OP_RETURN+ output. The whole point of +OP_RETURN+ is that you can't spend the money locked in that output, and therefore it does not need to be held in the UTXO set as potentially spendable—+OP_RETURN+ is _provably un-spendable_. +OP_RETURN+ is usually an output with a zero bitcoin amount, because any bitcoin assigned to such an output is effectively lost forever. If an +OP_RETURN+ is encountered by the script validation software, it results immediately in halting the execution of the validation script and marking the transaction as invalid. Thus, if you accidentally reference an +OP_RETURN+ output as an input in a transaction, that transaction is invalid. 
 

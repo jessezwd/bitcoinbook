@@ -1,28 +1,41 @@
 @charset "UTF-8";
 
 /*--------Put Your Custom CSS Rules Below--------*/
+/*--- This oneoff overrides the code in https://github.com/oreillymedia/<name_of_theme>/blob/master/pdf/pdf.css---*/
+
+
+pre[data-type="programlisting"] {
+  text-align: left;
+}
+
+/*----Uncomment to temporarily turn on code-eyballer highlighting (make sure to recomment after you build)
+
+pre {
+ background-color: yellow;
+}
+---*/
 
 /*----Uncomment to turn on automatic code wrapping----*/
 
-pre.programlisting, pre.screen, pre.literallayout {
+pre {
   white-space: pre-wrap;
   word-wrap: break-word;
-  text-align: left;
 }
 
 /*----Uncomment to change the TOC start page (set 
 the number to one page _after_ the one you want; 
-so 6 to start on v, 8 to start on vii, etc.)----*/
+so 6 to start on v, 8 to start on vii, etc.)
 
-@page tableofcontents:first {
+@page toc:first {
   counter-reset: page 6;
 }
+----*/
 
 /*----Uncomment to fix a bad break in the title 
       (increase padding value to push down, decrease 
       value to pull up)
 
-div.book div.booktitlepage h1.title {
+section[data-type="titlepage"] h1 {
   padding-left: 1.5in;
 }
 ----*/
@@ -31,7 +44,7 @@ div.book div.booktitlepage h1.title {
       (increase padding value to push down, decrease
       value to pull up)
 
-div.book div.booktitlepage h2.subtitle {
+section[data-type="titlepage"] h2 {
   padding-left: 1in;
 }
 ----*/
@@ -40,15 +53,7 @@ div.book div.booktitlepage h2.subtitle {
       (increase padding value to push down, decrease 
       value to pull up)
 
-p.titlepageauthor {
+section[data-type="titlepage"] p.author {
   padding-left: 3in;
-}
-----*/
-
-/*----Uncomment to suppress colophon, show only 
-      "About the Authors"
-
-div.colophon {
-  display: none;
 }
 ----*/
